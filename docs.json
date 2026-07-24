@@ -2,6 +2,10 @@
     "$schema": "https://mintlify.com/docs.json",
     "theme": "mint",
     "name": "CreptaPay",
+    "appearance": {
+        "default": "dark",
+        "strict": true
+    },
     "colors": {
         "primary": "#09CCDD",
         "light": "#0CDDFF",
