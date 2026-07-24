@@ -14,31 +14,14 @@
                 "tab": "Guides",
                 "groups": [
                     {
-                        "group": "Getting started",
-                        "pages": ["index", "quickstart", "development"]
+                        "group": "Getting Started",
+                        "pages": ["api-reference/introduction"]
                     },
                     {
-                        "group": "Customization",
+                        "group": "Webhooks",
                         "pages": [
-                            "essentials/settings",
-                            "essentials/navigation"
-                        ]
-                    },
-                    {
-                        "group": "Writing content",
-                        "pages": [
-                            "essentials/markdown",
-                            "essentials/code",
-                            "essentials/images",
-                            "essentials/reusable-snippets"
-                        ]
-                    },
-                    {
-                        "group": "AI tools",
-                        "pages": [
-                            "ai-tools/cursor",
-                            "ai-tools/claude-code",
-                            "ai-tools/windsurf"
+                            "api-reference/endpoint/webhooks",
+                            "api-reference/endpoint/verify-signature"
                         ]
                     }
                 ]
@@ -47,24 +30,12 @@
                 "tab": "API reference",
                 "groups": [
                     {
-                        "group": "Getting Started",
-                        "pages": ["api-reference/introduction"]
-                    },
-
-                    {
                         "group": "Payments API",
                         "pages": [
                             "api-reference/endpoint/create-payment",
                             "api-reference/endpoint/list-payments",
                             "api-reference/endpoint/get-payment",
                             "api-reference/endpoint/get-payment-by-reference"
-                        ]
-                    },
-                    {
-                        "group": "Webhooks",
-                        "pages": [
-                            "api-reference/endpoint/webhooks",
-                            "api-reference/endpoint/verify-signature"
                         ]
                     }
                 ]
