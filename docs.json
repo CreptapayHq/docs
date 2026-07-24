@@ -47,8 +47,8 @@
                 "tab": "API reference",
                 "groups": [
                     {
-                        "group": "Authentication",
-                        "pages": ["api-reference/endpoint/authentication"]
+                        "group": "Getting Started",
+                        "pages": ["api-reference/introduction"]
                     },
 
                     {
@@ -57,7 +57,13 @@
                             "api-reference/endpoint/create-payment",
                             "api-reference/endpoint/list-payments",
                             "api-reference/endpoint/get-payment",
-                            "api-reference/endpoint/get-payment-by-reference",
+                            "api-reference/endpoint/get-payment-by-reference"
+                        ]
+                    },
+                    {
+                        "group": "Webhooks",
+                        "pages": [
+                            "api-reference/endpoint/webhooks",
                             "api-reference/endpoint/verify-signature"
                         ]
                     }
@@ -65,18 +71,7 @@
             }
         ],
         "global": {
-            "anchors": [
-                {
-                    "anchor": "Documentation",
-                    "href": "https://mintlify.com/docs",
-                    "icon": "book-open-cover"
-                },
-                {
-                    "anchor": "Blog",
-                    "href": "https://mintlify.com/blog",
-                    "icon": "newspaper"
-                }
-            ]
+            "anchors": []
         }
     },
     "logo": {

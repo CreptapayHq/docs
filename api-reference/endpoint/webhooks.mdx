@@ -1,0 +1,122 @@
+---
+title: 'Webhooks'
+description: 'Get real-time updates for events happening in your CreptaPay account'
+---
+
+Webhooks allow your application to receive real-time HTTP POST notifications when events occur in your CreptaPay account. For example, when a customer successfully pays an invoice, CreptaPay dispatches a webhook event to your server.
+
+## Event payload
+
+All webhook events sent by CreptaPay share a common wrapper structure:
+
+```json
+{
+  "event": "payment.paid",
+  "data": {
+    "id": "pay_68dfa...",
+    "reference": "ref_98a7c...",
+    "currency": "USD",
+    "amount": 21.00,
+    "total": 21.00,
+    "status": "paid",
+    "createdAt": "2026-07-24T14:08:52Z",
+    "updatedAt": "2026-07-24T14:10:15Z"
+  },
+  "timestamp": 17848494949
+}
+```
+
+## Supported events
+
+CreptaPay dispatches notifications for the following events:
+
+### `payment.created`
+
+This event is dispatched immediately when a new payment link or wallet address is successfully initialized.
+
+```json
+{
+  "event": "payment.created",
+  "data": {
+    "id": "60d0fe4f5311236168a109ca",
+    "reference": "CP-A1B2C3D4E5",
+    "customer": {
+      "id": "60d0fe4f5311236168a109c9",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890"
+    },
+    "currency": "USD",
+    "amount": 21.00,
+    "address": "0x1234567890123456789012345678901234567890",
+    "fees": 0,
+    "total": 21.00,
+    "description": "Invoice Payment",
+    "line_items": [
+      {
+        "name": "Item Name",
+        "amount": 10.5,
+        "quantity": 2
+      }
+    ],
+    "status": "pending",
+    "type": "api",
+    "business": "60d0fe4f5311236168a109c8",
+    "allowed_currencies": [],
+    "expires_at": "2026-07-24T14:40:15Z",
+    "createdAt": "2026-07-24T14:08:52Z",
+    "updatedAt": "2026-07-24T14:08:52Z"
+  },
+  "timestamp": 17848494949
+}
+```
+
+### `payment.paid`
+
+This event is dispatched as soon as the transaction payment is successfully detected and confirmed on the blockchain network. The payload includes the `transactionHash` property.
+
+```json
+{
+  "event": "payment.paid",
+  "data": {
+    "id": "60d0fe4f5311236168a109ca",
+    "reference": "CP-A1B2C3D4E5",
+    "customer": {
+      "id": "60d0fe4f5311236168a109c9",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890"
+    },
+    "currency": "USD",
+    "amount": 21.00,
+    "address": "0x1234567890123456789012345678901234567890",
+    "fees": 0.21,
+    "total": 21.00,
+    "description": "Invoice Payment",
+    "line_items": [
+      {
+        "name": "Item Name",
+        "amount": 10.5,
+        "quantity": 2
+      }
+    ],
+    "status": "paid",
+    "type": "api",
+    "business": "60d0fe4f5311236168a109c8",
+    "allowed_currencies": [],
+    "expires_at": "2026-07-24T14:40:15Z",
+    "createdAt": "2026-07-24T14:08:52Z",
+    "updatedAt": "2026-07-24T14:10:15Z",
+    "transactionHash": "0xabcdef1234567890..."
+  },
+  "timestamp": 17848494950
+}
+```
+
+## Secure your webhooks
+
+To ensure that incoming HTTP requests were actually sent by CreptaPay and not tampered with, you must verify the signature sent in the `X-CreptaPay-Signature` header of each request.
+
+For step-by-step instructions and code examples on how to do this, see [Verify Signature](file:///Users/ajidev/Documents/Projects/docs/api-reference/endpoint/verify-signature.mdx).

@@ -1,25 +1,44 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Introduction & Authentication'
+description: 'Welcome to the CreptaPay API Reference. Learn how to authenticate your API requests and retrieve your API keys.'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Welcome to the CreptaPay API Reference. Here you can find details for integrating payment creation, wallet retrieval, and signature verification. The API supports two environments: Sandbox (for testing) and Production (for live transactions).
 
-## Welcome
+## Get your API keys
 
-Welcome to the CreptaPay API Reference. Here you can find details for integrating payment creation, wallet retrieval, and signature verification.
+You can retrieve your API keys directly from the CreptaPay Dashboard.
 
-## Authentication
+1. Log in to your CreptaPay Dashboard.
+2. Click **Developer** in the sidebar.
+3. Click **API Keys** in the developer sub-menu.
+4. You will find two sections:
+   - **Public Keys**: These keys begin with `pk_` and are safe for client-side environments (such as checkouts).
+   - **Secret Keys**: These keys begin with `sk_` and must be kept secure on your server (used for payment management and webhook verification).
+5. Click **Copy** next to the key you want to use.
 
-All API endpoints are authenticated using API keys passed in the headers.
+<Warning>
+  Keep your secret keys secure. Never share them in public repositories or client-side code.
+</Warning>
 
-```json
-"security": [
-  {
-    "ApiKeyAuth": []
-  }
-]
+## Authenticate requests
+
+You must pass your API key in every request to authenticated endpoints. The API supports two methods for sending your key:
+
+### Custom header
+
+Provide your API key in the `x-api-key` header of your requests.
+
+```bash
+curl -X GET "https://api.creptapay.com/v1/payment" \
+  -H "x-api-key: sk_live_..."
+```
+
+### Authorization header
+
+Provide your API key as a Bearer token in the `Authorization` header.
+
+```bash
+curl -X GET "https://api.creptapay.com/v1/payment" \
+  -H "Authorization: Bearer sk_live_..."
 ```
