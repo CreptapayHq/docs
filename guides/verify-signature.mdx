@@ -112,3 +112,116 @@ def webhook():
 if __name__ == '__main__':
     app.run(port=3000)
 ```
+
+### PHP
+
+```php
+<?php
+
+$secretKey = 'sk_live_...';
+$signature = $_SERVER['HTTP_X_CREPTAPAY_SIGNATURE'] ?? null;
+
+if (!$signature) {
+    http_response_code(400);
+    exit('Missing signature');
+}
+
+// Retrieve the raw request body
+$rawPayload = file_get_contents('php://input');
+$payload = json_decode($rawPayload, true);
+$dataPayload = $payload['data'] ?? null;
+
+// Re-serialize the inner data object to guarantee exact payload matching
+$serializedData = json_encode($dataPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+// Calculate HMAC SHA-256
+$calculatedSignature = hash_hmac('sha256', $serializedData, $secretKey);
+
+// Perform constant-time comparison
+if (!hash_equals($signature, $calculatedSignature)) {
+    http_response_code(401);
+    exit('Invalid signature');
+}
+
+// Handle the verified event
+$event = $payload['event'] ?? '';
+error_log("Received event: " . $event);
+
+http_response_code(200);
+echo 'OK';
+```
+
+### Java (Spring Boot)
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.*;
+import org.json.JSONObject;
+
+@RestController
+public class WebhookController {
+
+    private static final String SECRET_KEY = "sk_live_...";
+    private static final String HMAC_SHA256 = "HmacSHA256";
+
+    @PostMapping("/webhook")
+    public ResponseEntity<String> handleWebhook(
+            @RequestBody String rawBody,
+            @RequestHeader("X-CreptaPay-Signature") String signature) {
+
+        if (signature == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing signature");
+        }
+
+        try {
+            // Parse payload to retrieve the inner data object
+            JSONObject jsonPayload = new JSONObject(rawBody);
+            JSONObject dataObject = jsonPayload.getJSONObject("data");
+            String serializedData = dataObject.toString();
+
+            // Calculate HMAC SHA-256
+            Mac sha256Hmac = Mac.getInstance(HMAC_SHA256);
+            SecretKeySpec secretKeySpec = new SecretKeySpec(
+                SECRET_KEY.getBytes(StandardCharsets.UTF_8), 
+                HMAC_SHA256
+            );
+            sha256Hmac.init(secretKeySpec);
+            
+            byte[] hashBytes = sha256Hmac.doFinal(serializedData.getBytes(StandardCharsets.UTF_8));
+            
+            // Convert signature to hex string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            String calculatedSignature = hexString.toString();
+
+            // Perform constant-time comparison
+            boolean isValid = MessageDigest.isEqual(
+                signature.getBytes(StandardCharsets.UTF_8),
+                calculatedSignature.getBytes(StandardCharsets.UTF_8)
+            );
+
+            if (!isValid) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
+            }
+
+            // Handle the verified event
+            String event = jsonPayload.getString("event");
+            System.out.println("Received event: " + event);
+
+            return ResponseEntity.ok("OK");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying signature");
+        }
+    }
+}
+```
+
