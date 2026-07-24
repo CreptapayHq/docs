@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#09CCDD",
+    "light": "#0CDDFF",
+    "dark": "#008FA1"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -63,6 +63,17 @@
               "api-reference/endpoint/create",
               "api-reference/endpoint/delete",
               "api-reference/endpoint/webhook"
+            ]
+          },
+          {
+            "group": "Payments API",
+            "pages": [
+              "api-reference/endpoint/authentication",
+              "api-reference/endpoint/create-payment",
+              "api-reference/endpoint/list-payments",
+              "api-reference/endpoint/get-payment",
+              "api-reference/endpoint/get-payment-by-reference",
+              "api-reference/endpoint/verify-signature"
             ]
           }
         ]

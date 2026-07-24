@@ -1,0 +1,16 @@
+---
+title: 'Get Payment Detail'
+openapi: 'GET /v1/payment/{id}'
+---
+
+Retrieve the detailed status and transaction information for a specific payment.
+
+## Request authentication
+
+This endpoint requires a **Secret Key** (`sk_...`) passed in either the `x-api-key` header or as a Bearer token in the `Authorization` header.
+
+## Path parameters
+
+<ResponseField name="id" type="string" required>
+  The unique ID of the payment transaction.
+</ResponseField>

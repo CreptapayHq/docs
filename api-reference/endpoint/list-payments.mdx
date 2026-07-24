@@ -1,0 +1,20 @@
+---
+title: 'List Payments'
+openapi: 'GET /v1/payment'
+---
+
+Retrieve a paginated list of all payments associated with your business.
+
+## Request authentication
+
+This endpoint requires a **Secret Key** (`sk_...`) passed in either the `x-api-key` header or as a Bearer token in the `Authorization` header.
+
+## Query parameters
+
+<ResponseField name="page" type="integer">
+  The page number to retrieve. Defaults to `1`.
+</ResponseField>
+
+<ResponseField name="limit" type="integer">
+  The number of payments to retrieve per page. Defaults to `10`.
+</ResponseField>

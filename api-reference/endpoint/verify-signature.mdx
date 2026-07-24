@@ -1,0 +1,114 @@
+---
+title: 'Verify Signature'
+description: 'Secure your webhook endpoint by verifying incoming signatures from CreptaPay'
+---
+
+To ensure webhook events received at your endpoint are actually sent by CreptaPay and have not been tampered with, you must verify the signature sent in the request headers.
+
+CreptaPay includes an `X-CreptaPay-Signature` header in every webhook request. The signature is generated using a SHA-256 HMAC of the event's `data` payload with your merchant **Secret API Key** (`sk_...`).
+
+## Verification steps
+
+1. Retrieve the `X-CreptaPay-Signature` header from the incoming request.
+2. Extract the `data` object from the request body.
+3. Generate a SHA-256 HMAC of the stringified `data` object using your secret API key as the key.
+4. Compare your generated signature with the signature retrieved from the header.
+
+<Warning>
+  You must perform a constant-time comparison to prevent timing attacks.
+</Warning>
+
+## Code examples
+
+Here is how to verify webhook signatures in different languages:
+
+### Node.js (Express)
+
+```javascript
+const crypto = require('crypto');
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const signature = req.headers['x-creptapay-signature'];
+  const secretKey = 'sk_live_...'; // Your secret key
+  
+  if (!signature) {
+    return res.status(400).send('Missing signature');
+  }
+
+  // Retrieve the inner data object
+  const dataPayload = req.body.data;
+  
+  // Calculate signature
+  const calculatedSignature = crypto
+    .createHmac('sha256', secretKey)
+    .update(JSON.stringify(dataPayload))
+    .digest('hex');
+
+  // Perform constant-time comparison
+  const isValid = crypto.timingSafeEqual(
+    Buffer.from(signature, 'utf-8'),
+    Buffer.from(calculatedSignature, 'utf-8')
+  );
+
+  if (!isValid) {
+    return res.status(401).send('Invalid signature');
+  }
+
+  // Handle the verified event
+  const { event } = req.body;
+  console.log(`Received event: ${event}`);
+
+  res.status(200).send('OK');
+});
+
+app.listen(3000);
+```
+
+### Python (Flask)
+
+```python
+import hmac
+import hashlib
+import json
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+SECRET_KEY = b'sk_live_...'  # Your secret key as bytes
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    signature = request.headers.get('X-CreptaPay-Signature')
+    if not signature:
+        return 'Missing signature', 400
+
+    payload = request.get_json()
+    data_payload = payload.get('data')
+
+    # Convert the data payload back to a normalized JSON string
+    serialized_data = json.dumps(data_payload, separators=(',', ':'))
+
+    # Calculate HMAC SHA-256
+    calculated_signature = hmac.new(
+        SECRET_KEY,
+        msg=serialized_data.encode('utf-8'),
+        digestmod=hashlib.sha256
+    ).hexdigest()
+
+    # Perform constant-time comparison
+    if not hmac.compare_digest(signature, calculated_signature):
+        return 'Invalid signature', 401
+
+    # Handle the verified event
+    event = payload.get('event')
+    print(f"Received event: {event}")
+
+    return 'OK', 200
+
+if __name__ == '__main__':
+    app.run(port=3000)
+```

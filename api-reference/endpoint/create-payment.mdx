@@ -1,0 +1,53 @@
+---
+title: 'Create Payment'
+openapi: 'POST /v1/payment'
+---
+
+Initialize a new checkout payment transaction. This endpoint generates a unique blockchain wallet address for the transaction.
+
+## Request authentication
+
+This endpoint requires a **Public Key** (`pk_...`) passed in either the `x-api-key` header or as a Bearer token in the `Authorization` header.
+
+## Request parameters
+
+<ResponseField name="customer" type="object" required>
+  The customer profile payload.
+  <Expandable title="properties">
+    <ResponseField name="first_name" type="string" required>
+      The first name of the customer.
+    </ResponseField>
+    <ResponseField name="last_name" type="string" required>
+      The last name of the customer.
+    </ResponseField>
+    <ResponseField name="email" type="string" required>
+      The email address of the customer.
+    </ResponseField>
+    <ResponseField name="phone" type="string">
+      The phone number of the customer.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="items" type="array" required>
+  The list of purchase items.
+  <Expandable title="properties">
+    <ResponseField name="name" type="string" required>
+      The name of the item.
+    </ResponseField>
+    <ResponseField name="amount" type="number" required>
+      The unit price of the item.
+    </ResponseField>
+    <ResponseField name="quantity" type="integer" required>
+      The quantity of the item purchased.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  A description of the payment transaction.
+</ResponseField>
+
+<ResponseField name="expires_at" type="string">
+  ISO 8601 date-time string when the payment link expires. Defaults to 30 minutes from creation.
+</ResponseField>

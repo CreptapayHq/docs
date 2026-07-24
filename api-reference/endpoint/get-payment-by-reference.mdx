@@ -1,0 +1,16 @@
+---
+title: 'Get Payment by Reference'
+openapi: 'GET /v1/payment/reference/{reference}'
+---
+
+Retrieve payment status and details using a transaction reference. This is a public endpoint that does not require an API key.
+
+## Request authentication
+
+No authentication header is required to access this endpoint.
+
+## Path parameters
+
+<ResponseField name="reference" type="string" required>
+  The unique transaction reference of the payment.
+</ResponseField>

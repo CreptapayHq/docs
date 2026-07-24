@@ -1,0 +1,44 @@
+---
+title: 'Authentication'
+description: 'Learn how to authenticate your API requests and retrieve your API keys'
+---
+
+To interact with the CreptaPay API, you must authenticate your requests using API keys. The API supports two environments: Sandbox (for testing) and Production (for live transactions).
+
+## Get your API keys
+
+You can retrieve your API keys directly from the CreptaPay Dashboard.
+
+1. Log in to your CreptaPay Dashboard.
+2. Click **Developer** in the sidebar.
+3. Click **API Keys** in the developer sub-menu.
+4. You will find two sections:
+   - **Public Keys**: These keys begin with `pk_` and are safe for client-side environments.
+   - **Secret Keys**: These keys begin with `sk_` and must be kept secure on your server.
+5. Click **Copy** next to the key you want to use.
+
+<Warning>
+  Keep your secret keys secure. Never share them in public repositories or client-side code.
+</Warning>
+
+## Authenticate requests
+
+You must pass your API key in every request to authenticated endpoints. The API supports two methods for sending your key:
+
+### Custom header
+
+Provide your API key in the `x-api-key` header of your requests.
+
+```bash
+curl -X GET "https://api.creptapay.com/v1/payment" \
+  -H "x-api-key: sk_live_..."
+```
+
+### Authorization header
+
+Provide your API key as a Bearer token in the `Authorization` header.
+
+```bash
+curl -X GET "https://api.creptapay.com/v1/payment" \
+  -H "Authorization: Bearer sk_live_..."
+```
