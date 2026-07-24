@@ -1,6 +1,6 @@
 ---
-title: 'Introduction & Authentication'
-description: 'Welcome to the CreptaPay API Reference. Learn how to authenticate your API requests and retrieve your API keys.'
+title: "Introduction"
+description: "Welcome to the CreptaPay API Reference. Learn how to authenticate your API requests and retrieve your API keys."
 ---
 
 Welcome to the CreptaPay API Reference. Here you can find details for integrating payment creation, wallet retrieval, and signature verification. The API supports two environments: Sandbox (for testing) and Production (for live transactions).
@@ -13,12 +13,13 @@ You can retrieve your API keys directly from the CreptaPay Dashboard.
 2. Click **Developer** in the sidebar.
 3. Click **API Keys** in the developer sub-menu.
 4. You will find two sections:
-   - **Public Keys**: These keys begin with `pk_` and are safe for client-side environments (such as checkouts).
-   - **Secret Keys**: These keys begin with `sk_` and must be kept secure on your server (used for payment management, customer management, and webhook verification).
+    - **Public Keys**: These keys begin with `pk_` and are safe for client-side environments (such as checkouts).
+    - **Secret Keys**: These keys begin with `sk_` and must be kept secure on your server (used for payment management, customer management, and webhook verification).
 5. Click **Copy** next to the key you want to use.
 
 <Warning>
-  Keep your secret keys secure. Never share them in public repositories or client-side code.
+    Keep your secret keys secure. Never share them in public repositories or
+    client-side code.
 </Warning>
 
 ## Authenticate requests

@@ -203,8 +203,8 @@
         }
       },
       "post": {
-        "summary": "Create/Update Customer",
-        "description": "Create a new customer profile or update if the email already exists. Requires secret key starting with sk_.",
+        "summary": "Create Customer",
+        "description": "Create a new customer profile. Requires secret key starting with sk_.",
         "security": [
           {
             "ApiKeyAuth": []
@@ -242,7 +242,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully saved customer"
+            "description": "Successfully created customer"
           }
         }
       }
@@ -272,7 +272,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "summary": "Update Customer details",
         "description": "Edit details of an existing customer by ID. Requires secret key starting with sk_.",
         "security": [
