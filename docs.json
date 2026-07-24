@@ -15,13 +15,13 @@
                 "groups": [
                     {
                         "group": "Getting Started",
-                        "pages": ["api-reference/introduction"]
+                        "pages": ["guides/introduction"]
                     },
                     {
                         "group": "Webhooks",
                         "pages": [
-                            "api-reference/endpoint/webhooks",
-                            "api-reference/endpoint/verify-signature"
+                            "guides/webhooks",
+                            "guides/verify-signature"
                         ]
                     }
                 ]
