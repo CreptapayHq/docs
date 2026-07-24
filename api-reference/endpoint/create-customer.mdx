@@ -1,0 +1,28 @@
+---
+title: 'Create/Update Customer'
+openapi: 'POST /v1/customer'
+---
+
+Create a new customer profile or update the details of an existing profile if the email address already exists.
+
+## Request authentication
+
+This endpoint requires a **Secret Key** (`sk_...`) passed in either the `x-api-key` header or as a Bearer token in the `Authorization` header.
+
+## Request parameters
+
+<ResponseField name="email" type="string" required>
+  The unique email address of the customer.
+</ResponseField>
+
+<ResponseField name="first_name" type="string" required>
+  The first name of the customer.
+</ResponseField>
+
+<ResponseField name="last_name" type="string" required>
+  The last name of the customer.
+</ResponseField>
+
+<ResponseField name="phone" type="string">
+  The optional phone number of the customer.
+</ResponseField>

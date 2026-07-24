@@ -30,12 +30,22 @@
                 "tab": "API reference",
                 "groups": [
                     {
-                        "group": "Payments API",
+                        "group": "Payments",
                         "pages": [
                             "api-reference/endpoint/create-payment",
                             "api-reference/endpoint/list-payments",
                             "api-reference/endpoint/get-payment",
                             "api-reference/endpoint/get-payment-by-reference"
+                        ]
+                    },
+                    {
+                        "group": "Customers",
+                        "pages": [
+                            "api-reference/endpoint/create-customer",
+                            "api-reference/endpoint/list-customers",
+                            "api-reference/endpoint/get-customer",
+                            "api-reference/endpoint/update-customer",
+                            "api-reference/endpoint/delete-customer"
                         ]
                     }
                 ]

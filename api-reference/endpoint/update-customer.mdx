@@ -1,0 +1,34 @@
+---
+title: 'Update Customer Detail'
+openapi: 'PATCH /v1/customer/{id}'
+---
+
+Update specific details of an existing customer profile.
+
+## Request authentication
+
+This endpoint requires a **Secret Key** (`sk_...`) passed in either the `x-api-key` header or as a Bearer token in the `Authorization` header.
+
+## Path parameters
+
+<ResponseField name="id" type="string" required>
+  The unique ID of the customer to update.
+</ResponseField>
+
+## Request parameters
+
+<ResponseField name="email" type="string">
+  The new email address for the customer profile.
+</ResponseField>
+
+<ResponseField name="first_name" type="string">
+  The new first name for the customer profile.
+</ResponseField>
+
+<ResponseField name="last_name" type="string">
+  The new last name for the customer profile.
+</ResponseField>
+
+<ResponseField name="phone" type="string">
+  The new phone number for the customer profile.
+</ResponseField>

@@ -1,9 +1,9 @@
 ---
-title: 'Get Payment Detail'
-openapi: 'GET /v1/payment/{id}'
+title: 'Delete Customer'
+openapi: 'DELETE /v1/customer/{id}'
 ---
 
-Retrieve the detailed status and transaction information for a specific payment.
+Remove a customer profile from your business account.
 
 ## Request authentication
 
@@ -12,5 +12,5 @@ This endpoint requires a **Secret Key** (`sk_...`) passed in either the `x-api-k
 ## Path parameters
 
 <ResponseField name="id" type="string" required>
-  The unique ID of the payment transaction.
+  The unique ID of the customer to delete.
 </ResponseField>

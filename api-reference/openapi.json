@@ -164,7 +164,12 @@
     "/payment/reference/{reference}": {
       "get": {
         "summary": "Get Payment by Reference",
-        "description": "Public endpoint to retrieve payment status and information by transaction reference.",
+        "description": "Retrieve payment status and information by transaction reference. Requires public key starting with pk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "reference",
@@ -178,6 +183,165 @@
         "responses": {
           "200": {
             "description": "Successfully retrieved payment"
+          }
+        }
+      }
+    },
+    "/customer": {
+      "get": {
+        "summary": "Fetch Customers",
+        "description": "Retrieve all customers for the authenticated business. Requires secret key starting with sk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched customers"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create/Update Customer",
+        "description": "Create a new customer profile or update if the email already exists. Requires secret key starting with sk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "first_name",
+                  "last_name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully saved customer"
+          }
+        }
+      }
+    },
+    "/customer/{id}": {
+      "get": {
+        "summary": "Fetch Customer details",
+        "description": "Retrieve specific customer information by ID. Requires secret key starting with sk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched customer"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Customer details",
+        "description": "Edit details of an existing customer by ID. Requires secret key starting with sk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated customer"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Customer",
+        "description": "Remove a customer profile by ID. Requires secret key starting with sk_.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted customer"
           }
         }
       }
