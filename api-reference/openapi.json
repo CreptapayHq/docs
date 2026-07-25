@@ -17,6 +17,230 @@
         "in": "header",
         "name": "x-api-key"
       }
+    },
+    "schemas": {
+      "Customer": {
+        "type": "object",
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "email"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "60d0fe4f5311236168a109c9"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "John"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1234567890"
+          }
+        }
+      },
+      "CustomerList": {
+        "type": "object",
+        "required": [
+          "data",
+          "total"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Customer"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "LineItem": {
+        "type": "object",
+        "required": [
+          "name",
+          "amount",
+          "quantity"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Item Name"
+          },
+          "amount": {
+            "type": "number",
+            "example": 10.5
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "required": [
+          "id",
+          "reference",
+          "customer",
+          "currency",
+          "amount",
+          "address",
+          "fees",
+          "total",
+          "description",
+          "line_items",
+          "status",
+          "type",
+          "business",
+          "allowed_currencies",
+          "expires_at",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "60d0fe4f5311236168a109ca"
+          },
+          "reference": {
+            "type": "string",
+            "example": "CP-A1B2C3D4E5"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          },
+          "amount": {
+            "type": "number",
+            "example": 21.0
+          },
+          "address": {
+            "type": "string",
+            "example": "0x1234567890123456789012345678901234567890"
+          },
+          "fees": {
+            "type": "number",
+            "example": 0.21
+          },
+          "total": {
+            "type": "number",
+            "example": 21.0
+          },
+          "description": {
+            "type": "string",
+            "example": "Invoice Payment"
+          },
+          "line_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "paid",
+              "expired"
+            ],
+            "example": "pending"
+          },
+          "type": {
+            "type": "string",
+            "example": "api"
+          },
+          "business": {
+            "type": "string",
+            "example": "60d0fe4f5311236168a109c8"
+          },
+          "allowed_currencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-24T14:40:15Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-24T14:08:52Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-24T14:08:52Z"
+          },
+          "transactionHash": {
+            "type": "string",
+            "example": "0xabcdef1234567890..."
+          }
+        }
+      },
+      "PaymentList": {
+        "type": "object",
+        "required": [
+          "data",
+          "has_more",
+          "total"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            }
+          },
+          "has_more": {
+            "type": "boolean",
+            "example": false
+          },
+          "total": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "DeleteConfirmation": {
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Customer profile successfully deleted"
+          }
+        }
+      }
     }
   },
   "paths": {
@@ -92,13 +316,37 @@
                     "format": "date-time"
                   }
                 }
+              },
+              "example": {
+                "customer": {
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "john.doe@example.com",
+                  "phone": "+1234567890"
+                },
+                "items": [
+                  {
+                    "name": "Item Name",
+                    "amount": 10.5,
+                    "quantity": 2
+                  }
+                ],
+                "description": "Invoice Payment",
+                "expires_at": "2026-07-24T14:40:15Z"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Payment successfully created"
+            "description": "Payment successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
           }
         }
       },
@@ -130,7 +378,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved payments"
+            "description": "Successfully retrieved payments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentList"
+                }
+              }
+            }
           }
         }
       }
@@ -156,7 +411,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved payment details"
+            "description": "Successfully retrieved payment details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
           }
         }
       }
@@ -182,7 +444,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved payment"
+            "description": "Successfully retrieved payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
           }
         }
       }
@@ -198,7 +467,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully fetched customers"
+            "description": "Successfully fetched customers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerList"
+                }
+              }
+            }
           }
         }
       },
@@ -236,13 +512,26 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "email": "john.doe@example.com",
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "+1234567890"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successfully created customer"
+            "description": "Successfully created customer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           }
         }
       }
@@ -268,7 +557,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully fetched customer"
+            "description": "Successfully fetched customer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           }
         }
       },
@@ -311,13 +607,26 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "email": "john.doe@example.com",
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "+1234567890"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successfully updated customer"
+            "description": "Successfully updated customer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           }
         }
       },
@@ -341,7 +650,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted customer"
+            "description": "Successfully deleted customer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteConfirmation"
+                }
+              }
+            }
           }
         }
       }

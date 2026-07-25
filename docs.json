@@ -1,5 +1,6 @@
 {
     "$schema": "https://mintlify.com/docs.json",
+    "openapi": "api-reference/openapi.json",
     "theme": "mint",
     "name": "CreptaPay",
     "appearance": {
@@ -36,20 +37,20 @@
                     {
                         "group": "Payments",
                         "pages": [
-                            "api-reference/endpoint/create-payment",
-                            "api-reference/endpoint/list-payments",
-                            "api-reference/endpoint/get-payment",
-                            "api-reference/endpoint/get-payment-by-reference"
+                            "api-reference/payment/create-payment",
+                            "api-reference/payment/list-payments",
+                            "api-reference/payment/get-payment",
+                            "api-reference/payment/get-payment-by-reference"
                         ]
                     },
                     {
                         "group": "Customers",
                         "pages": [
-                            "api-reference/endpoint/create-customer",
-                            "api-reference/endpoint/list-customers",
-                            "api-reference/endpoint/get-customer",
-                            "api-reference/endpoint/update-customer",
-                            "api-reference/endpoint/delete-customer"
+                            "api-reference/customer/create-customer",
+                            "api-reference/customer/list-customers",
+                            "api-reference/customer/get-customer",
+                            "api-reference/customer/update-customer",
+                            "api-reference/customer/delete-customer"
                         ]
                     }
                 ]
